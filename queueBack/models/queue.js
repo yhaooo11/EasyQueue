@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const queueSchema = new mongoose.Schema({
     name: String,
+    description: String,
     date: Date,
     queue: [
         {
