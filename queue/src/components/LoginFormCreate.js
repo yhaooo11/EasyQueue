@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
-const LoginFormCreate = ({login}) => {
+const LoginFormCreate = ({login, navigate}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
 
     // useNavigate to go to create page clicking dont log in. Need to set token tho
     const handleUsernameChange = (event) => {
@@ -19,6 +20,7 @@ const LoginFormCreate = ({login}) => {
         login(username, password)
         setUsername('')
         setPassword('')
+        navigate('/create')
     }
 
     return (

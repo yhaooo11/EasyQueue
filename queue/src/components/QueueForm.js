@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import queueService from '../services/queues'
 
-const QueueForm = () => {
+
+const QueueForm = ({ navigate }) => {
+    const [queues, setQueues] = useState([])
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
 
@@ -12,9 +15,13 @@ const QueueForm = () => {
         setDescription(event.target.value)
     }
 
-    const addQueue = (event) => {
+    const addQueue =  async (event) => {
         event.preventDefault()
-        
+        const response = await queueService.create({ name, description })
+        setQueues(queues.concat(response))
+        setName('')
+        setDescription('')
+        navigate(`/queue/${response.id}`)
     }
 
     return (

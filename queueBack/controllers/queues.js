@@ -8,6 +8,11 @@ queuesRouter.get('/', async (request, response) => {
     response.json(queues)
 })
 
+queuesRouter.get('/:id', async (request, response) => {
+    const queue = await Queue.findById(request.params.id)
+    response.json(queue)
+})
+
 queuesRouter.post('/', async (request, response) => {
     const body = request.body
 
@@ -20,6 +25,7 @@ queuesRouter.post('/', async (request, response) => {
 
     const queue = new Queue({
         name: body.name,
+        description: body.description,
         date: new Date(),
         queue: body.queue,
         user: user._id
