@@ -2,6 +2,7 @@ const queuesRouter = require('express').Router()
 const Queue = require('../models/queue')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const { update } = require('../models/queue')
 
 queuesRouter.get('/', async (request, response) => {
     const queues = await Queue.find({}).populate('user', {username: 1, name: 1})
@@ -37,6 +38,18 @@ queuesRouter.post('/', async (request, response) => {
     await user.save()
 
     response.status(201).json(savedQueue)
+})
+
+queuesRouter.put('/:id', async (request, response) => {
+    const body = request.body
+
+    const queue = {
+        queue: body.queue
+    }
+
+    const updated = await Queue.findByIdAndUpdate(request.params.id, queue, { new: true })
+
+    response.json(updated)
 })
 
 module.exports = queuesRouter

@@ -31,6 +31,16 @@ const App = () => {
         'loggedQueueappUser', JSON.stringify(user)
       )
       queueService.setToken(user.token)
+      queueService.updateQueue('62acd86bac349dbc8cab8b38', {
+      queue: [{
+        name: "q test",
+        location: "test location"
+      },
+      {
+        name: "a change",
+        location: "room 131"
+      }]
+      })
       setUser(user)
       //alert('logged in')
     } catch (exception) {
