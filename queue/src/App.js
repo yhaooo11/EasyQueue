@@ -5,9 +5,11 @@ import {
 } from 'react-router-dom'
 import queueService from './services/queues'
 import loginService from './services/login'
-import LoginFormCreate from './components/LoginFormCreate'
+import Home from './components/Home'
 import QueueForm from './components/QueueForm'
 import Queue from './components/Queue'
+import LoginFormCreate from './components/LoginFormCreate'
+import Join from './components/Join'
 
 const App = () => {
   const [queues, setQueues] = useState([])
@@ -51,10 +53,12 @@ const App = () => {
   return (
     <div>
       <h1>Queue Maker</h1>
-      
+      {user ? <h3>{user.username} is logged in</h3> : <h3>logged out</h3>}
     
         <Routes>
-          <Route path='/' element={<LoginFormCreate login={handleLogin} navigate={navigate}/>}></Route>
+          <Route path='/' element={<Home user={user} navigate={navigate}></Home>}></Route>
+          <Route path='/join' element={<Join queues={queues} navigate={navigate}></Join>}></Route>
+          <Route path='/login-create' element={<LoginFormCreate login={handleLogin} navigate={navigate}></LoginFormCreate>}></Route>
           <Route path='/create' element={<QueueForm navigate={navigate}></QueueForm>}></Route>
           <Route path='/queue/:id' element={<Queue queueService={queueService} user={user}></Queue>}></Route>
         </Routes>

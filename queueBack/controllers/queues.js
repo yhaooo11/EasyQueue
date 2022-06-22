@@ -2,7 +2,6 @@ const queuesRouter = require('express').Router()
 const Queue = require('../models/queue')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-const { update } = require('../models/queue')
 
 queuesRouter.get('/', async (request, response) => {
     const queues = await Queue.find({}).populate('user', {username: 1, name: 1})
