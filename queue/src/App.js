@@ -10,6 +10,7 @@ import QueueForm from './components/QueueForm'
 import Queue from './components/Queue'
 import LoginFormCreate from './components/LoginFormCreate'
 import Join from './components/Join'
+import SignUp from './components/SignUp'
 
 const App = () => {
   const [queues, setQueues] = useState([])
@@ -58,6 +59,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Home user={user} navigate={navigate}></Home>}></Route>
           <Route path='/join' element={<Join queues={queues} navigate={navigate}></Join>}></Route>
+          <Route path='/signup' element={<SignUp login={handleLogin} navigate={navigate}></SignUp>}></Route>
           <Route path='/login-create' element={<LoginFormCreate login={handleLogin} navigate={navigate}></LoginFormCreate>}></Route>
           <Route path='/create' element={<QueueForm navigate={navigate}></QueueForm>}></Route>
           <Route path='/queue/:id' element={<Queue queueService={queueService} user={user}></Queue>}></Route>
