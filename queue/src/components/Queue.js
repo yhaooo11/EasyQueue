@@ -38,6 +38,32 @@ const Queue = ({ queueService, user }) => {
         setLocation('')
     }
 
+    const copyQueueLink = () => {
+        navigator.clipboard.writeText(window.location.href);
+        alert("Copied the text: " + window.location.href);
+    }
+
+    const removeFirst = async (event) => {
+        event.preventDefault()
+        if (queue.queue.length > 0) {
+            const newQueueList = queue.queue.slice(1)
+            const newQueue = { ...queue, queue: newQueueList }
+            const response = await queueService.updateQueue(id, newQueue)
+            setQueue(response)
+        } else {
+            alert('no one in queue!')
+        }
+    }
+
+    const removeOne = async (thisId) => {
+        console.log(id)
+        const newQueueList = queue.queue.filter(queue => queue._id !== thisId)
+        const newQueue = { ...queue, queue: newQueueList }
+        console.log(newQueue)
+        const response = await queueService.updateQueue(id, newQueue)
+        setQueue(response)
+    }
+
     if (!queue) {
         return (
             <div>
@@ -47,32 +73,68 @@ const Queue = ({ queueService, user }) => {
     }
 
     if (user && user.id === queue.user) {
-        console.log('same')
+        return (
+            <div>
+                Creator View
+                <div>
+                    Share: <input type='text' value={window.location.href} readOnly id='link'></input>
+                    <button onClick={copyQueueLink}>copy link</button>
+                </div>
+                <div>
+                    id: {queue.id}
+                </div>
+                <div>
+                    <h2>name: {queue.name}</h2>
+                </div>
+                <div>
+                    date created: {queue.date.slice(0, 9)}
+                </div>
+                <button onClick={removeFirst}>remove first</button>
+                <div>
+                    {queue.queue.length === 0 ? <i>queue empty</i> : 
+                        <ol>
+                            {queue.queue.map(item => (
+                                <li key={item._id}>
+                                    {item.name} at {item.location}
+                                    <button onClick={() => removeOne(item._id)}>remove</button>
+                                </li>
+                            ))}
+                        </ol>}
+                </div>
+               
+                
+            </div>
+        )
     }
 
     return (
-      <div>
-        User View
         <div>
-            <h2>name: {queue.name}</h2>
-        </div>
-        <div>
-            date created: {queue.date.slice(0, 9)}
-        </div>
-        <form onSubmit={updateQueue}>
+            User View
             <div>
-                name: <input type='text' value={name} onChange={handleNameChange} required></input>
+                Share: <input type='text' value={window.location.href} readOnly></input>
+                <button onClick={copyQueueLink}>copy link</button>
             </div>
             <div>
-                location: <input type='text' value={location} onChange={handleLocationChange} placeholder='optional'></input>
+                <h2>name: {queue.name}</h2>
             </div>
-            <button type='submit'>Join queue</button>
-        </form>
-        <ul>
-            {queue.queue.map(item => <li key={item._id}>{item.name} at {item.location}</li>)}
-        </ul>
-      </div>
-    )
+            <div>
+                date created: {queue.date.slice(0, 9)}
+            </div>
+            <form onSubmit={updateQueue}>
+                <h2>Join queue</h2>
+                <div>
+                    name: <input type='text' value={name} onChange={handleNameChange} required></input>
+                </div>
+                <div>
+                    location: <input type='text' value={location} onChange={handleLocationChange} placeholder='optional'></input>
+                </div>
+                <button type='submit'>Join queue</button>
+            </form>
+            <ol>
+                {queue.queue.map(item => <li key={item._id}>{item.name} at {item.location}</li>)}
+            </ol>
+        </div>
+    )  
   }
 
 export default Queue

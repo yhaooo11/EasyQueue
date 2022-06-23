@@ -28,7 +28,6 @@ const create = async newObject => {
 
 const updateQueue = async (id, newObject) => {
     const response = await axios.put(`${baseUrl}/${id}`, newObject)
-    console.log('here')
     return response.data
 }
 

@@ -4,11 +4,13 @@ import queueService from '../services/queues'
 const Join = ({ queues, navigate }) => {
     const [id, setId] = useState('')
 
-    const joinQueue = async () => {
+    const joinQueue = async (event) => {
+        event.preventDefault()
         try {
             const queue = await queueService.getOne(id)
             if (queue) {
                 navigate(`/queue/${id}`)
+                //console.log(id)
             }
         } catch (exception) {
             alert('invalid id')

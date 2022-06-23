@@ -8,10 +8,14 @@ const Home = ({ user, navigate }) => {
         }
     }
 
+    const handleJoin = () => {
+        navigate('/join')
+    }
+
     return (
         <div>
             <button onClick={handleCreate}>Create</button>
-            <button onClick={console.log('join')}>Join</button>
+            <button onClick={handleJoin}>Join</button>
         </div>
     )
 }
