@@ -45,13 +45,13 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/', async (request, response) => {
-  const users = await User.find({}).populate('queues', { url: 1, title: 1, author: 1 })
+  const users = await User.find({}).populate('queues', { name: 1, date: 1, queue: 1 })
 
   response.json(users)
 })
 
 usersRouter.get('/:id', async (request, response) => {
-  const user = await User.findById(request.params.id).populate('queues', { url: 1, title: 1, author: 1 })
+  const user = await User.findById(request.params.id).populate('queues', { name: 1, date: 1, queue: 1 })
 
   response.json(user)
 })

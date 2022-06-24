@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const LoginFormCreate = ({login, navigate}) => {
+const LoginForm = ({login, navigate, redirect}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
@@ -20,7 +20,7 @@ const LoginFormCreate = ({login, navigate}) => {
         login(username, password)
         setUsername('')
         setPassword('')
-        navigate('/create')
+        navigate(redirect)
     }
 
     return (
@@ -35,9 +35,8 @@ const LoginFormCreate = ({login, navigate}) => {
                 </div>
                 <button type='submit'>create</button>
             </form>
-            <button>create without logging in</button>
         </div>
     )
 }
 
-export default LoginFormCreate
+export default LoginForm
