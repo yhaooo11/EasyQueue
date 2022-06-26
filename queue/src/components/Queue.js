@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import {
   useParams
 } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 
 const Queue = ({ queueService, user }) => {
     const [queue, setQueue] = useState(null)
@@ -130,6 +131,24 @@ const Queue = ({ queueService, user }) => {
                 </div>
                 <button type='submit'>Join queue</button>
             </form>
+            <Table striped>
+                <tbody>
+                    {
+                        queue.queue.map(item => 
+                            <tr key={item._id}>
+                                <td>
+                                    {queue.queue.indexOf(item) + 1}
+                                </td>
+                                <td>
+                                    {item.name}
+                                </td>
+                                <td>
+                                    {item.location}
+                                </td>
+                            </tr>)
+                    }
+                </tbody>
+            </Table>
             <ol>
                 {queue.queue.map(item => <li key={item._id}>{item.name} at {item.location}</li>)}
             </ol>

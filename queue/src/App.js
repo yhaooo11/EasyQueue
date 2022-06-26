@@ -52,7 +52,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
       <h1>Queue Maker</h1>
       {user ? <h3>{user.username} is logged in</h3> : <h3>logged out</h3>}
       {user ? <button onClick={handleLogout}>logout</button> : <button onClick={goToLogin}>login</button>}
