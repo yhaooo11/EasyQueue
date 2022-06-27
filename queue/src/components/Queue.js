@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom'
 import { Table } from 'react-bootstrap'
 
-const Queue = ({ queueService, user }) => {
+const Queue = ({ queueService, user, socket }) => {
     const [queue, setQueue] = useState(null)
     const [name, setName] = useState('')
     const [location, setLocation] = useState('')
@@ -14,7 +14,14 @@ const Queue = ({ queueService, user }) => {
         queueService.getOne(id).then(queue => {
             setQueue(queue)
         })
-    }, [id, queueService])
+        if (socket) {
+            console.log(socket)
+            socket.emit('join-queue', id)
+            socket.on('send-queue', (data) => {
+                setQueue(data)
+            })
+        }
+    }, [id, queueService, socket])
 
     const handleNameChange = (event) => {
         setName(event.target.value)
@@ -33,6 +40,7 @@ const Queue = ({ queueService, user }) => {
         })
         
         const response = await queueService.updateQueue(id, { queue: newQueue })
+        socket.emit('update-queue', response, id)
 
         setQueue(response)
         setName('')
@@ -50,6 +58,7 @@ const Queue = ({ queueService, user }) => {
             const newQueueList = queue.queue.slice(1)
             const newQueue = { ...queue, queue: newQueueList }
             const response = await queueService.updateQueue(id, newQueue)
+            socket.emit('update-queue', response, id)
             setQueue(response)
         } else {
             alert('no one in queue!')
@@ -62,6 +71,7 @@ const Queue = ({ queueService, user }) => {
         const newQueue = { ...queue, queue: newQueueList }
         console.log(newQueue)
         const response = await queueService.updateQueue(id, newQueue)
+        socket.emit('update-queue', response, id)
         setQueue(response)
     }
 

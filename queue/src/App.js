@@ -17,6 +17,7 @@ import User from './components/User'
 const App = () => {
   const [queues, setQueues] = useState([])
   const [user, setUser] = useState(null)
+  const [socket, setSocket] = useState(null)
 
   const navigate = useNavigate()
 
@@ -28,6 +29,9 @@ const App = () => {
       setUser(JSON.parse(window.localStorage.getItem('loggedQueueappUser')))
     }
     const socket = io()
+    setSocket(socket)
+
+    return () => socket.disconnect()
   }, [])
 
   const handleLogin = async (username, password) => {
@@ -64,9 +68,9 @@ const App = () => {
         <Route path='/join' element={<Join queues={queues} navigate={navigate}></Join>}></Route>
         <Route path='/signup' element={<SignUp login={handleLogin} navigate={navigate}></SignUp>}></Route>
         <Route path='/login-create' element={<LoginForm login={handleLogin} navigate={navigate} redirect={'/create'}></LoginForm>}></Route>
-        <Route path='/login' element={<LoginForm login={handleLogin} navigate={navigate} redirect={'/'}></LoginForm>}></Route>
+        <Route path='/login' element={<LoginForm login={handleLogin} navigate={navigate} redirect={-1}></LoginForm>}></Route>
         <Route path='/create' element={<QueueForm navigate={navigate}></QueueForm>}></Route>
-        <Route path='/queue/:id' element={<Queue queueService={queueService} user={user}></Queue>}></Route>
+        <Route path='/queue/:id' element={<Queue queueService={queueService} user={user} socket={socket}></Queue>}></Route>
         <Route path='/account' element={<User user={user}></User>}></Route>
       </Routes>
      
