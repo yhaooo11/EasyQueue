@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import io from 'socket.io-client'
 import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate
@@ -26,6 +27,7 @@ const App = () => {
     if (window.localStorage.getItem('loggedQueueappUser')) {
       setUser(JSON.parse(window.localStorage.getItem('loggedQueueappUser')))
     }
+    const socket = io()
   }, [])
 
   const handleLogin = async (username, password) => {
@@ -52,7 +54,7 @@ const App = () => {
   }
 
   return (
-    <div className='container'>
+    <div>
       <h1>Queue Maker</h1>
       {user ? <h3>{user.username} is logged in</h3> : <h3>logged out</h3>}
       {user ? <button onClick={handleLogout}>logout</button> : <button onClick={goToLogin}>login</button>}
