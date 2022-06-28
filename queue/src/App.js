@@ -13,6 +13,7 @@ import LoginForm from './components/LoginForm'
 import Join from './components/Join'
 import SignUp from './components/SignUp'
 import User from './components/User'
+import { NavDropdown, Navbar, Nav, Container, Button } from 'react-bootstrap'
 
 const App = () => {
   const [queues, setQueues] = useState([])
@@ -59,21 +60,48 @@ const App = () => {
 
   return (
     <div>
-      <h1>Queue Maker</h1>
-      {user ? <h3>{user.username} is logged in</h3> : <h3>logged out</h3>}
-      {user ? <button onClick={handleLogout}>logout</button> : <button onClick={goToLogin}>login</button>}
-    
-      <Routes>
-        <Route path='/' element={<Home user={user} navigate={navigate}></Home>}></Route>
-        <Route path='/join' element={<Join queues={queues} navigate={navigate}></Join>}></Route>
-        <Route path='/signup' element={<SignUp login={handleLogin} navigate={navigate}></SignUp>}></Route>
-        <Route path='/login-create' element={<LoginForm login={handleLogin} navigate={navigate} redirect={'/create'}></LoginForm>}></Route>
-        <Route path='/login' element={<LoginForm login={handleLogin} navigate={navigate} redirect={-1}></LoginForm>}></Route>
-        <Route path='/create' element={<QueueForm navigate={navigate}></QueueForm>}></Route>
-        <Route path='/queue/:id' element={<Queue queueService={queueService} user={user} socket={socket}></Queue>}></Route>
-        <Route path='/account' element={<User user={user}></User>}></Route>
-      </Routes>
-     
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Container>
+        <Navbar.Brand href="#home">Queue It!</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#features">Home</Nav.Link>
+            <Nav.Link href="#pricing">Create</Nav.Link>
+            <Nav.Link href="#pricing">Join</Nav.Link>
+            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+          <Nav>
+            <Navbar.Text href="#deets">{user ? <div>{user.username} is logged in</div> : <div>logged out</div>}</Navbar.Text>
+            <Nav.Link eventKey={2} href="#memes">
+              {user ? <Button variant='primary' onClick={handleLogout}>logout</Button> : <Button variant='primary' onClick={goToLogin}>login</Button>}
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <div className='container'>
+        <h1>Queue Maker</h1>
+        
+      
+      
+        <Routes>
+          <Route path='/' element={<Home user={user} navigate={navigate}></Home>}></Route>
+          <Route path='/join' element={<Join queues={queues} navigate={navigate}></Join>}></Route>
+          <Route path='/signup' element={<SignUp login={handleLogin} navigate={navigate}></SignUp>}></Route>
+          <Route path='/login-create' element={<LoginForm login={handleLogin} navigate={navigate} redirect={'/create'}></LoginForm>}></Route>
+          <Route path='/login' element={<LoginForm login={handleLogin} navigate={navigate} redirect={-1}></LoginForm>}></Route>
+          <Route path='/create' element={<QueueForm navigate={navigate}></QueueForm>}></Route>
+          <Route path='/queue/:id' element={<Queue queueService={queueService} user={user} socket={socket}></Queue>}></Route>
+          <Route path='/account' element={<User user={user}></User>}></Route>
+        </Routes>
+      </div>
     </div>
   )
 }
