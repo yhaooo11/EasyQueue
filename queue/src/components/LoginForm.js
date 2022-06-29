@@ -56,7 +56,7 @@ const LoginForm = ({login, navigate, redirect}) => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                    Submit
+                    Login
                 </Button>
             </Form>
         </div>

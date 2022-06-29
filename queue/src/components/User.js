@@ -1,3 +1,6 @@
+import { Table } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+
 const User = ({ user }) => {
 
     if (!user) {
@@ -8,13 +11,34 @@ const User = ({ user }) => {
         )
     } else {
         return (
-            <div>
-                <h2>{user.name}</h2>
-                <h3>{user.username}</h3>
-                My queues:
-                <ul>
-                    {user.queues.map(queue => <li key={queue.id}>{queue.name}</li>)}
-                </ul>
+            <div className='mt'>
+                {user.name && <h2>Welcome {user.name}!</h2>}
+                <h4>Username: {user.username}</h4>
+                <div className='mt'>
+                    My queues:
+                    <div>
+                        <Table striped>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Date created</th>
+                                
+                            </tr>
+                            {
+                                user.queues.map(item => 
+                                    <tr key={item._id}>
+                                        <td>
+                                            <Link to={`/queue/${item.id}`}>{item.name}</Link>
+                                        </td>
+                                        <td>
+                                            {item.date.slice(0, 9)}
+                                        </td>
+                                    </tr>)
+                            }
+                        </tbody>
+                        </Table>
+                    </div>
+                </div>
             </div>
         )
     }   

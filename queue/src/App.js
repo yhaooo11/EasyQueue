@@ -72,7 +72,7 @@ const App = () => {
             <Nav.Link href="#"><Link to='/join' className='nav-item'>Join</Link></Nav.Link>
           </Nav>
           <Nav>
-            <Navbar.Text href="#deets">{user ? <div>{user.username} is logged in</div> : <div>logged out</div>}</Navbar.Text>
+            <Navbar.Text href="#deets">{user ? <Link to='/account'>{user.username} is logged in</Link> : <div>logged out</div>}</Navbar.Text>
             <Nav.Link eventKey={2} href="">
               {user ? <Button variant='primary' onClick={handleLogout}>logout</Button> : <Button variant='primary' onClick={goToLogin}>login</Button>}
             </Nav.Link>
