@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import io from 'socket.io-client'
 import {
   BrowserRouter as Router,
-  Routes, Route, Link, useParams, useNavigate
+  Routes, Route, Link, useNavigate
 } from 'react-router-dom'
 import queueService from './services/queues'
 import loginService from './services/login'
@@ -13,7 +13,7 @@ import LoginForm from './components/LoginForm'
 import Join from './components/Join'
 import SignUp from './components/SignUp'
 import User from './components/User'
-import { NavDropdown, Navbar, Nav, Container, Button } from 'react-bootstrap'
+import { Navbar, Nav, Container, Button } from 'react-bootstrap'
 
 const App = () => {
   const [queues, setQueues] = useState([])
@@ -45,6 +45,7 @@ const App = () => {
       setUser(user)
     } catch (exception) {
       alert('wrong username or password')
+      navigate('/login')  
     }
   }
 
@@ -69,13 +70,6 @@ const App = () => {
             <Nav.Link href="#"><Link to='/' className='nav-item'>Home</Link></Nav.Link>
             <Nav.Link href="#"><Link to='/create' className='nav-item'>Create</Link></Nav.Link>
             <Nav.Link href="#"><Link to='/join' className='nav-item'>Join</Link></Nav.Link>
-            {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown> */}
           </Nav>
           <Nav>
             <Navbar.Text href="#deets">{user ? <div>{user.username} is logged in</div> : <div>logged out</div>}</Navbar.Text>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import userService from '../services/users'
+import { Form, Button, Alert } from 'react-bootstrap'
 
 const SignUp = ({ login, navigate }) => {
     const [username, setUsername] = useState('')
@@ -36,9 +37,30 @@ const SignUp = ({ login, navigate }) => {
     }
 
     return (
-        <div>
-            <div>{error}</div>
-            <form onSubmit={createAccount}>
+        <div className='mt'>
+            {error && <Alert variant='danger'>{error}</Alert>}
+            <h2>Sign up</h2>
+            <Form onSubmit={createAccount}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control type="text" placeholder="Name" onChange={handleNameChange} required/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" placeholder="Username" onChange={handleUsernameChange} required/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} required/>
+                </Form.Group>
+
+                <Button variant="primary" type="submit">
+                    Create Account
+                </Button>
+            </Form>
+            {/* <form onSubmit={createAccount}>
                 <div>
                     name: <input type='text' value={name} onChange={handleNameChange}></input>
                 </div>
@@ -49,7 +71,7 @@ const SignUp = ({ login, navigate }) => {
                     password: <input type='password' value={password} onChange={handlePasswordChange} required></input>
                 </div>
                 <button type='submit'>Create Account</button>
-            </form>
+            </form> */}
         </div>
     )
 }

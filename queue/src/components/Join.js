@@ -23,7 +23,7 @@ const Join = ({ queues, navigate }) => {
     }
 
     return (
-        <div>
+        <div className='mt'>
             <h2>Join queue</h2>
             <Form onSubmit={joinQueue}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
