@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import {
   useParams
 } from 'react-router-dom'
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 
 const Queue = ({ queueService, user, socket }) => {
     const [queue, setQueue] = useState(null)
@@ -86,82 +86,135 @@ const Queue = ({ queueService, user, socket }) => {
     if (user && user.id === queue.user) {
         return (
             <div>
-                Creator View
-                <div>
-                    Share: <input type='text' value={window.location.href} readOnly id='link'></input>
-                    <button onClick={copyQueueLink}>copy link</button>
+                <h5 style={{marginTop: '1rem'}}>Creator View</h5>
+                <div className='queue-card'>
+                    <div>
+                        <h2>{queue.name}</h2>
+                    </div>
+                    <div className='queue-info'>
+                        <div>
+                            {queue.description}
+                        </div>
+                        <div>
+                            date created: {queue.date.slice(0, 9)}
+                        </div>
+                        <div>
+                            id: {queue.id}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        Share <input className='share' type='text' value={window.location.href} readOnly id='link'></input>
+                        <Button variant='secondary' onClick={copyQueueLink}>Copy link</Button>
+                    </div>
+                    
+                    <div>
+                        <Button variant='primary' onClick={removeFirst}>Remove first</Button>
+                    </div>     
                 </div>
+
                 <div>
-                    id: {queue.id}
+                    {
+                        queue.queue.length === 0 ? <h3>Queue empty!</h3> :
+                        <Table striped>
+                        <tbody>
+                            <tr>
+                                <th>Position</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                            </tr>
+                            {
+                                queue.queue.map(item => 
+                                    <tr key={item._id}>
+                                        <td>
+                                            {queue.queue.indexOf(item) + 1}
+                                        </td>
+                                        <td>
+                                            {item.name}
+                                        </td>
+                                        <td>
+                                            {item.location}
+                                        </td>
+                                    </tr>)
+                            }
+                        </tbody>
+                    </Table>
+                    }
+                    
                 </div>
-                <div>
-                    <h2>name: {queue.name}</h2>
-                </div>
-                <div>
-                    date created: {queue.date.slice(0, 9)}
-                </div>
-                <button onClick={removeFirst}>remove first</button>
-                <div>
-                    {queue.queue.length === 0 ? <i>queue empty</i> : 
-                        <ol>
-                            {queue.queue.map(item => (
-                                <li key={item._id}>
-                                    {item.name} at {item.location}
-                                    <button onClick={() => removeOne(item._id)}>remove</button>
-                                </li>
-                            ))}
-                        </ol>}
-                </div>
-               
-                
             </div>
+            
         )
     }
 
     return (
         <div>
-            User View
-            <div>
-                Share: <input type='text' value={window.location.href} readOnly></input>
-                <button onClick={copyQueueLink}>copy link</button>
-            </div>
-            <div>
-                <h2>name: {queue.name}</h2>
-            </div>
-            <div>
-                date created: {queue.date.slice(0, 9)}
-            </div>
-            <form onSubmit={updateQueue}>
-                <h2>Join queue</h2>
+            <h5 style={{marginTop: '1rem'}}>User View</h5>
+            <div className='queue-card' style={{marginBottom: '2rem'}}>
                 <div>
-                    name: <input type='text' value={name} onChange={handleNameChange} required></input>
+                    <h2>{queue.name}</h2>
                 </div>
+                <div className='queue-info'>
+                    <div>
+                        {queue.description}
+                    </div>
+                    <div>
+                        date created: {queue.date.slice(0, 9)}
+                    </div>
+                    <div>
+                        id: {queue.id}
+                    </div>
+                </div>
+                
                 <div>
-                    location: <input type='text' value={location} onChange={handleLocationChange} placeholder='optional'></input>
-                </div>
-                <button type='submit'>Join queue</button>
-            </form>
-            <Table striped>
-                <tbody>
-                    {
-                        queue.queue.map(item => 
-                            <tr key={item._id}>
-                                <td>
-                                    {queue.queue.indexOf(item) + 1}
-                                </td>
-                                <td>
-                                    {item.name}
-                                </td>
-                                <td>
-                                    {item.location}
-                                </td>
-                            </tr>)
+                    Share <input className='share' type='text' value={window.location.href} readOnly id='link'></input>
+                    <Button variant='secondary' onClick={copyQueueLink}>Copy link</Button>
+                </div>   
+            </div>
+
+            <div className='queue-card' style={{marginTop: '0px'}}>
+                
+                <form onSubmit={updateQueue}>
+                    <h2>Join queue</h2>
+                    <div>
+                        Name <input className='join-input' type='text' value={name} onChange={handleNameChange} required></input>
+                    </div>
+                    <div>
+                        Location <input className='join-input' type='text' value={location} onChange={handleLocationChange} placeholder='optional'></input>
+                    </div>
+                    {/* <button type='submit'>Join queue</button> */}
+                    <Button type='submit' variant='primary'>Join queue</Button>
+                </form>
+            </div>
+
+            <div>
+                {
+                        queue.queue.length === 0 ? <h3>Queue empty!</h3> :
+                        <Table striped>
+                        <tbody>
+                            <tr>
+                                <th>Position</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                            </tr>
+                            {
+                                queue.queue.map(item => 
+                                    <tr key={item._id}>
+                                        <td>
+                                            {queue.queue.indexOf(item) + 1}
+                                        </td>
+                                        <td>
+                                            {item.name}
+                                        </td>
+                                        <td>
+                                            {item.location}
+                                        </td>
+                                    </tr>)
+                            }
+                        </tbody>
+                    </Table>
                     }
-                </tbody>
-            </Table>
-            <ol>
-                {queue.queue.map(item => <li key={item._id}>{item.name} at {item.location}</li>)}
-            </ol>
+            </div>
         </div>
     )  
   }

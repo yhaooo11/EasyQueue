@@ -1,3 +1,5 @@
+import { Button } from 'react-bootstrap'
+
 const Home = ({ user, navigate }) => {
 
     const handleCreate = () => {
@@ -14,8 +16,19 @@ const Home = ({ user, navigate }) => {
 
     return (
         <div>
-            <button onClick={handleCreate}>Create</button>
-            <button onClick={handleJoin}>Join</button>
+            <div className='card'>
+                <h1>Queue It!</h1>
+                <p>
+                    A free online queue maker that allows you to instantly create your own queue and let anyone join.
+                </p>
+                <div>
+                    <Button variant='primary' size='lg' className='home-button' onClick={handleCreate}>Create Queue</Button>
+                </div>
+                <div>
+                    <Button variant='secondary' size='lg' className='home-button' onClick={handleJoin}>Join Queue</Button>
+                </div>
+            </div>
+            
         </div>
     )
 }

@@ -62,24 +62,24 @@ const App = () => {
     <div>
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Container>
-        <Navbar.Brand href="#home">Queue It!</Navbar.Brand>
+        <Navbar.Brand href="#"><Link to='/' className='nav-main'>Queue It!</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#features">Home</Nav.Link>
-            <Nav.Link href="#pricing">Create</Nav.Link>
-            <Nav.Link href="#pricing">Join</Nav.Link>
-            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+            <Nav.Link href="#"><Link to='/' className='nav-item'>Home</Link></Nav.Link>
+            <Nav.Link href="#"><Link to='/create' className='nav-item'>Create</Link></Nav.Link>
+            <Nav.Link href="#"><Link to='/join' className='nav-item'>Join</Link></Nav.Link>
+            {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
           <Nav>
             <Navbar.Text href="#deets">{user ? <div>{user.username} is logged in</div> : <div>logged out</div>}</Navbar.Text>
-            <Nav.Link eventKey={2} href="#memes">
+            <Nav.Link eventKey={2} href="">
               {user ? <Button variant='primary' onClick={handleLogout}>logout</Button> : <Button variant='primary' onClick={goToLogin}>login</Button>}
             </Nav.Link>
           </Nav>
@@ -87,10 +87,6 @@ const App = () => {
         </Container>
       </Navbar>
       <div className='container'>
-        <h1>Queue Maker</h1>
-        
-      
-      
         <Routes>
           <Route path='/' element={<Home user={user} navigate={navigate}></Home>}></Route>
           <Route path='/join' element={<Join queues={queues} navigate={navigate}></Join>}></Route>
