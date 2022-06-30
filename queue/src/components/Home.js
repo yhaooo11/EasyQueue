@@ -17,9 +17,9 @@ const Home = ({ user, navigate }) => {
     return (
         <div>
             <div className='card'>
-                <h1>Queue It!</h1>
+                <h1>Easy Queue</h1>
                 <p>
-                    A free online queue maker that allows you to instantly create your own queue and let anyone join.
+                    A free online queue maker that allows you to create and join queues.
                 </p>
                 <div>
                     <Button variant='primary' size='lg' className='home-button' onClick={handleCreate}>Create Queue</Button>
