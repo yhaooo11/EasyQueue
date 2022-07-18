@@ -6,4 +6,4 @@ Try it out here: https://easy-queue-web.herokuapp.com/
 
 ## How it was made
 
-Easy queue was made using Express, React, MongoDB, and Bootstrap. It is hosted on Heroku.
+Easy queue was made using Express, SocketIO, React, MongoDB, and Bootstrap. It is hosted on Heroku.
